@@ -1,0 +1,15 @@
+services:
+  sqlserver:
+    image: mcr.microsoft.com/mssql/server:2019-latest
+    container_name: sqlserver-container
+    ports:
+      - "1433:1433"
+    environment:
+      ACCEPT_EULA: "Y"
+      SA_PASSWORD: "YourStrong!Passw0rd"
+      MSSQL_DATA_DIR: /var/opt/mssql/data
+      NEW_DATABASE: "NORTHWIND"
+    volumes:
+      - ./DatabaseScript.sql:/usr/src/app/script.sql
+      - ./entrypoint.sh:/usr/src/app/entrypoint.sh
+    entrypoint: ["/bin/bash", "/usr/src/app/entrypoint.sh"]
